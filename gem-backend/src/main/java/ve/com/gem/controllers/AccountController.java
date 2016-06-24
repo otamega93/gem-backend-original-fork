@@ -41,7 +41,7 @@ public class AccountController {
 			return new ResponseEntity<List<Account>>(account, HttpStatus.OK);
 		}
 	    
-	    @RequestMapping(value = "/findByUsernameLike/{username}", method=RequestMethod.GET)
+	    @RequestMapping(value = "/findByUsernameLike/{username}/", method=RequestMethod.GET)
 		public ResponseEntity<List<Account>> findByUsernameLike(@PathVariable String username){
 	    	
 	    	if (null != username) {
@@ -53,7 +53,7 @@ public class AccountController {
 	    	}
 		}
 	    
-	    @RequestMapping(value = "/findByUsername/{username}", method=RequestMethod.GET)
+	    @RequestMapping(value = "/findByUsername/{username}/", method=RequestMethod.GET)
 		public ResponseEntity<Account> findByUsername(@PathVariable String username){
 	    	
 	    	if (null != username) {
@@ -70,7 +70,7 @@ public class AccountController {
 	    	}
 		}
 	    
-	    @RequestMapping(value = "/findById/{id}", method=RequestMethod.GET)
+	    @RequestMapping(value = "/findById/{id}/", method=RequestMethod.GET)
 		public ResponseEntity<Account> findById(@PathVariable Long id) {
 	    	
 	    	if (null != id) {
@@ -82,7 +82,7 @@ public class AccountController {
 	    	}
 		}
 	    
-	    @RequestMapping(value = "/{id}", method=RequestMethod.PUT)
+	    @RequestMapping(value = "/{id}/", method=RequestMethod.PUT)
 	    public ResponseEntity<Account> updateAccount(@PathVariable Long id, @RequestBody Account account) {
 	    	
 	    	Account accountSearch = accountService.findById(id);

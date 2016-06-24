@@ -62,38 +62,37 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     	 * Production ready configuration. Uncomment when in production:
     	 */
     	
-    	http    
-            .addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class)
-            .authorizeRequests()
-            .antMatchers("/login").permitAll().anyRequest().authenticated()
-            .antMatchers("/logout").permitAll().anyRequest().authenticated();
-
-        http
-            .formLogin().loginPage("/login").permitAll().successHandler(authenticationSuccessHandler)
-            .failureHandler(authenticationFailureHandler)
-            .and()
-            .rememberMe().rememberMeParameter("remember-me").tokenValiditySeconds(2000)
-            .and()
-            .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
-            .and()
-            .sessionManagement().maximumSessions(1);
+//    	http    
+//            .addFilterAfter(new CsrfTokenResponseHeaderBindingFilter(), CsrfFilter.class)
+//            .authorizeRequests()
+//            .antMatchers("/login").permitAll().anyRequest().authenticated()
+//            .antMatchers("/logout").permitAll().anyRequest().authenticated();
+//
+//        http
+//            .formLogin().loginPage("/login").permitAll().successHandler(authenticationSuccessHandler)
+//            .failureHandler(authenticationFailureHandler)
+//            .and()
+//            .rememberMe().rememberMeParameter("remember-me").tokenValiditySeconds(2000)
+//            .and()
+//            .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
+//            .and()
+//            .sessionManagement().maximumSessions(1);
         
-        //*/
         
         // In Development:
         
-//        http
-//        	.csrf().disable()
-//        	.authorizeRequests().anyRequest().permitAll()
-//        	.and()
-//        	.formLogin().loginPage("/login").permitAll().successHandler(authenticationSuccessHandler)
-//        	.failureHandler(authenticationFailureHandler)
-//        	.and()
-//        	.rememberMe().rememberMeParameter("remember-me").tokenValiditySeconds(2000)
-//        	.and()
-//        	.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
-//        	.and()
-//            .sessionManagement().maximumSessions(1);
+        http
+        	.csrf().disable()
+        	.authorizeRequests().anyRequest().permitAll()
+        	.and()
+        	.formLogin().loginPage("/login").permitAll().successHandler(authenticationSuccessHandler)
+        	.failureHandler(authenticationFailureHandler)
+        	.and()
+        	.rememberMe().rememberMeParameter("remember-me").tokenValiditySeconds(2000)
+        	.and()
+        	.exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
+        	.and()
+            .sessionManagement().maximumSessions(1);
     }
     
 }
