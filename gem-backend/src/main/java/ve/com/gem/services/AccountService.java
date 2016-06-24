@@ -27,7 +27,7 @@ public class AccountService implements IAccountService {
     @Autowired
     private IAccountRepository accountRepository;
 
-    //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     public Account save(Account account) {
     	if (account.getPassword() != null) {
     		account.setPassword(passwordEncoder.encode(account.getPassword()));

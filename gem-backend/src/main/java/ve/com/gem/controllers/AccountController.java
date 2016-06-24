@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import ve.com.gem.entities.Account;
-import ve.com.gem.services.AccountService;
-import ve.com.gem.services.GemService;
 import ve.com.gem.services.IAccountService;
 
 @RestController
@@ -25,7 +22,7 @@ public class AccountController {
 	    private IAccountService accountService;
 	    
 
-	    @RequestMapping(value = "/",method = RequestMethod.POST)
+	    @RequestMapping(value = "/", method = RequestMethod.POST)
 	    public ResponseEntity<Account> saveAccount(@RequestBody Account account) {
 	    	if (null != account) {
 	    		accountService.save(account);
@@ -37,14 +34,14 @@ public class AccountController {
 	    	}
 	    }
 	    
-	    @RequestMapping(value="/",method=RequestMethod.GET)
+	    @RequestMapping(value = "/", method=RequestMethod.GET)
 		public ResponseEntity<List<Account>> loadAll(){
 			List<Account> account = accountService.findAll();
 			
 			return new ResponseEntity<List<Account>>(account, HttpStatus.OK);
 		}
 	    
-	    @RequestMapping(value="/findByUsernameLike/{username}",method=RequestMethod.GET)
+	    @RequestMapping(value = "/findByUsernameLike/{username}", method=RequestMethod.GET)
 		public ResponseEntity<List<Account>> findByUsernameLike(@PathVariable String username){
 	    	
 	    	if (null != username) {
@@ -56,7 +53,7 @@ public class AccountController {
 	    	}
 		}
 	    
-	    @RequestMapping(value="/findByUsername/{username}",method=RequestMethod.GET)
+	    @RequestMapping(value = "/findByUsername/{username}", method=RequestMethod.GET)
 		public ResponseEntity<Account> findByUsername(@PathVariable String username){
 	    	
 	    	if (null != username) {
@@ -73,7 +70,7 @@ public class AccountController {
 	    	}
 		}
 	    
-	    @RequestMapping(value="/findById/{id}",method=RequestMethod.GET)
+	    @RequestMapping(value = "/findById/{id}", method=RequestMethod.GET)
 		public ResponseEntity<Account> findById(@PathVariable Long id) {
 	    	
 	    	if (null != id) {
@@ -85,7 +82,7 @@ public class AccountController {
 	    	}
 		}
 	    
-	    @RequestMapping(value="/{id}",method=RequestMethod.PUT)
+	    @RequestMapping(value = "/{id}", method=RequestMethod.PUT)
 	    public ResponseEntity<Account> updateAccount(@PathVariable Long id, @RequestBody Account account) {
 	    	
 	    	Account accountSearch = accountService.findById(id);

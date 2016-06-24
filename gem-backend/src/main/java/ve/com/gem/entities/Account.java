@@ -1,16 +1,14 @@
 package ve.com.gem.entities;
 
-import javax.annotation.Nonnull;
-import javax.annotation.ParametersAreNonnullByDefault;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 public class Account {
@@ -19,17 +17,17 @@ public class Account {
 	@GeneratedValue
 	private Long id;
 	
-	@Nonnull
+	@NotNull
 	@NotBlank
 	@Column(unique=true)
 	private String username;
 	
-	@Nonnull
+	@NotNull
 	@NotBlank
 	//@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	
-	@Nonnull
+	@NotNull
 	@NotBlank
 	private String authorities;
 
@@ -61,7 +59,7 @@ public class Account {
 		this.username = username;
 	}
 
-	@JsonIgnore
+	//@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
