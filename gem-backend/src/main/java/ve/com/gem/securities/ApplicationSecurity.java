@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.config.EnableHypermediaSupport;
+import org.springframework.hateoas.config.EnableHypermediaSupport.HypermediaType;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -14,6 +17,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 /**
  * Created by informatica on 26/02/16.
@@ -31,7 +36,8 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     private AuthFailure authenticationFailureHandler;
     @Autowired
     private AuthSuccess authenticationSuccessHandler;
-
+    @Autowired
+    private LogoutSuccessHandler logoutSuccessHandler;
     @Autowired
     private UserDetailServiceImpl userDetailService;
 
@@ -54,6 +60,13 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    
+//    public class WebConfig extends WebMvcConfigurerAdapter {
+//        @Override
+//        public void configureContentNegotiation(ContentNegotiationConfigurer c) {
+//            c.defaultContentType(MediaTypes.HAL_JSON);
+//        }
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -69,15 +82,19 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 //            .antMatchers("/logout").permitAll().anyRequest().authenticated();
 //
 //        http
-//            .formLogin().loginPage("/login").permitAll().successHandler(authenticationSuccessHandler)
-//            .failureHandler(authenticationFailureHandler)
+//            .formLogin().loginPage("/login").permitAll().usernameParameter("username").passwordParameter("password")
+//            .successHandler(authenticationSuccessHandler).failureHandler(authenticationFailureHandler)
 //            .and()
-//            .rememberMe().rememberMeParameter("remember-me").tokenValiditySeconds(2000)
+//            .rememberMe().userDetailsService(userDetailService).rememberMeParameter("remember-me").tokenValiditySeconds(20000)
 //            .and()
 //            .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
 //            .and()
-//            .sessionManagement().maximumSessions(1);
+//            .sessionManagement().maximumSessions(3);
+//        
+//        http
+//        	.logout().logoutSuccessHandler(logoutSuccessHandler).logoutUrl("/logout");
         
+        //*/
         
         // In Development:
         
