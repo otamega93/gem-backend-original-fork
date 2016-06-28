@@ -7,6 +7,9 @@ import java.util.Calendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.cache.CacheProperties.Guava;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 
@@ -25,10 +28,13 @@ public class GemService implements IGemService {
 	}
 
 	@Override
-	public List<Gem> findAll() {
+	public Page<Gem> findAll(Pageable pageable) {
+		
 		gems = Lists.newArrayList(gemRepository.findAll());
-	return gems;
+		PageImpl<Gem> pages= new PageImpl<>(gems);
+	return pages;
 	}
+	
 
 	@Override
 	public List<Gem> search(String key) {
