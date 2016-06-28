@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.cache.CacheProperties.Guava;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 
@@ -62,5 +63,11 @@ public class GemService implements IGemService {
 	public Gem findById(Long id) {
 		Gem gem = gemRepository.findOne(id);
 		return gem;
+	}
+
+	@Override
+	public Page<Gem> findAll(Sort sort) {
+		 PageImpl<Gem> pages= new PageImpl<Gem>(Lists.newArrayList(gemRepository.findAll(sort)));
+		 return pages;
 	}
 }

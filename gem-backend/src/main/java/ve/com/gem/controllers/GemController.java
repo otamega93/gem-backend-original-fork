@@ -1,9 +1,9 @@
 package ve.com.gem.controllers;
 
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ import ve.com.gem.resources.assembler.GemResourceAssembler;
 import ve.com.gem.services.IGemService;
 
 @RestController
-@RequestMapping(value = "/gems")
+@RequestMapping(value = "/api/v1/gems")
 public class GemController {
 	
 	@Autowired
@@ -34,6 +34,22 @@ public class GemController {
 	
 	public GemController() {
 	}
+	
+	/**
+	 * List all gems.
+	 * @return
+	 */
+	@RequestMapping(value="",method=RequestMethod.GET,produces="application/hal+json")
+	@ResponseBody
+	public PagedResources<GemResource> sortAll(Sort sort){
+		
+		Page<Gem> gems = gemService.findAll(sort);
+		//List<Gem> gems = gemService.findAll();
+		//return new ResponseEntity<PagedResources<GemResource>>(gems,HttpStatus.OK);
+
+		return pageAssembler.toResource(gems, gemResourceAssembler);
+	}
+	
 	/**
 	 * List all gems.
 	 * @return
@@ -55,51 +71,51 @@ public class GemController {
 	 * @return
 	 */
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
-	public ResponseEntity<Gem> load(@PathVariable Long id)
+	public ResponseEntity<GemResource> load(@PathVariable Long id)
 	{
 		Gem gem = gemService.findById(id);
 		if(null == gem)
 		{
-			return new ResponseEntity<Gem>(gem,HttpStatus.NOT_FOUND);
+			return new ResponseEntity<GemResource>(gemResourceAssembler.toResource(gem),HttpStatus.NOT_FOUND);
 		}
 		else
 		{
-			return new ResponseEntity<Gem>(gem,HttpStatus.OK);
+			return new ResponseEntity<GemResource>(gemResourceAssembler.toResource(gem),HttpStatus.OK);
 		}
 	}
 	
 	
 	
 	@RequestMapping(value="/",method=RequestMethod.POST, produces = "application/json; charset=UTF-8")
-	public ResponseEntity<Gem> save(@RequestBody Gem gem)
+	public ResponseEntity<GemResource> save(@RequestBody Gem gem)
 	{
 		if(gemService.save(gem)!=null)
 		{
-			return new ResponseEntity<Gem>(gem,HttpStatus.OK);
+			return new ResponseEntity<GemResource>(gemResourceAssembler.toResource(gem),HttpStatus.OK);
 		}
 		else
 		{
-			return new ResponseEntity<Gem>(gem,HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<GemResource>(gemResourceAssembler.toResource(gem),HttpStatus.BAD_REQUEST);
 		}
 		
 	}
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT, produces = "application/json; charset=UTF-8")
-	public ResponseEntity<Gem> update(@PathVariable Long id,@RequestBody Gem gem)
+	public ResponseEntity<GemResource> update(@PathVariable Long id,@RequestBody Gem gem)
 	{
 		Gem gemCatch = gemService.findById(id);
 		if(null == gemCatch)
 		{
-			return new ResponseEntity<Gem>(gem,HttpStatus.NOT_FOUND);
+			return new ResponseEntity<GemResource>(gemResourceAssembler.toResource(gemCatch),HttpStatus.NOT_FOUND);
 		}else
 		
 		if(null != gem )
 		{
 			gem.setId(id);
 			gemService.save(gem);
-			return new ResponseEntity<Gem>(gem,HttpStatus.OK);
+			return new ResponseEntity<GemResource>(gemResourceAssembler.toResource(gemCatch),HttpStatus.OK);
 		}
 		else
-			return new ResponseEntity<Gem>(gem,HttpStatus.NOT_FOUND);
+			return new ResponseEntity<GemResource>(gemResourceAssembler.toResource(gemCatch),HttpStatus.NOT_FOUND);
 	}
 }
