@@ -27,7 +27,7 @@ public class GemResourceAssembler extends ResourceAssemblerSupport<Gem, GemResou
 		/*
 		 * ADD custom link to your representation object
 		 */
-		//gemResource.add(linkTo(GemController.class).slash(gem.getId()).withSelfRel());
+		gemResource.add(linkTo(GemController.class).slash(gem.getId()).withRel("gem"));
 		return gemResource;
 	}
 

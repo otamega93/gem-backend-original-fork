@@ -12,11 +12,14 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.google.common.collect.Lists;
 
 import ve.com.gem.entities.Gem;
 import ve.com.gem.repositories.IGemRepository;
 
+@Transactional(readOnly=true)
 @Service
 public class GemService implements IGemService {
 	
@@ -31,8 +34,9 @@ public class GemService implements IGemService {
 	@Override
 	public Page<Gem> findAll(Pageable pageable) {
 		
-		gems = Lists.newArrayList(gemRepository.findAll());
-		PageImpl<Gem> pages= new PageImpl<>(gems);
+		gems = Lists.newArrayList(gemRepository.findAll(pageable));
+		PageImpl<Gem> pages= new PageImpl<>(gems,pageable,gemRepository.count());
+		
 	return pages;
 	}
 	
@@ -47,6 +51,7 @@ public class GemService implements IGemService {
 		// TODO Auto-generated method stub
 	}
 
+	@Transactional(readOnly=false)
 	@Override
 	public Gem save(Gem gem) {
 		if(null != gem)
