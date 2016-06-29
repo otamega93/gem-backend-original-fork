@@ -62,7 +62,7 @@ public class GemController {
 	 */
 	@RequestMapping(value="",method=RequestMethod.GET,produces="application/hal+json")
 	@ResponseBody
-	public PagedResources<GemResource> loadAll(Pageable pageable, Sort sort){
+	public PagedResources<GemResource> loadAll(Pageable pageable){
 		
 		Page<Gem> gems = gemService.findAll(pageable);
 		//List<Gem> gems = gemService.findAll();
