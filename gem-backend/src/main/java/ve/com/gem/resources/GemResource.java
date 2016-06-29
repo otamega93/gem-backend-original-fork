@@ -2,6 +2,7 @@ package ve.com.gem.resources;
 
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.core.Relation;
+
 @Relation(collectionRelation="gems")
 public class GemResource extends ResourceSupport {
 	
