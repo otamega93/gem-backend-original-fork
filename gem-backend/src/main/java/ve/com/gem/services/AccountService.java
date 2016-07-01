@@ -3,19 +3,21 @@ package ve.com.gem.services;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 
 import ve.com.gem.entities.Account;
 import ve.com.gem.repositories.IAccountRepository;
 
-@Transactional
+@Transactional(readOnly = true)
 @Service
 public class AccountService implements IAccountService {
 	
@@ -28,6 +30,7 @@ public class AccountService implements IAccountService {
     private IAccountRepository accountRepository;
 
     //@PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
+    @Transactional(readOnly = false)
     public Account save(Account account) {
     	if (account.getPassword() != null) {
     		account.setPassword(passwordEncoder.encode(account.getPassword()));
@@ -43,13 +46,17 @@ public class AccountService implements IAccountService {
     }
 
 	@Override
-	public List<Account> findAll() {
-		return accounts = Lists.newArrayList(accountRepository.findAll());
+	public Page<Account> findAll(Pageable pageable) {
+		accounts = Lists.newArrayList(accountRepository.findAll(pageable));
+		PageImpl<Account> accountPages= new PageImpl<>(accounts, pageable, accountRepository.count());
+		return accountPages;
 	}
 
 	@Override
-	public List<Account> findByUsernameLike(String key) {
-		return accountRepository.findByUsernameLike("%"+key+"%");
+	public Page<Account> findByUsernameLike(String key, Pageable pageable) {
+		accountRepository.findByUsernameLike("%"+key+"%", pageable);
+		PageImpl<Account> accountPages= new PageImpl<>(accounts, pageable, accountRepository.count());
+		return accountPages;
 	}
 
 	@Override
