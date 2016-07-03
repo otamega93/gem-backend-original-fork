@@ -10,8 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
-import org.springframework.stereotype.Component;
-
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Base {

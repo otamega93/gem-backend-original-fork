@@ -15,5 +15,6 @@ public interface IGemService {
 	 void addByName(String name);
 	 Gem save (Gem gem);
 	 Gem findById(Long id);
+	boolean delete(Gem gemCatch);
 	 
 }

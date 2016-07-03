@@ -24,7 +24,7 @@ public class GemResourceAssembler extends ResourceAssemblerSupport<Gem, GemResou
 		GemResource gemResource = createResourceWithId(gem.getId(), gem);
 		gemResource.setName(gem.getName());
 		gemResource.setDescription(gem.getDescription());
-		gemResource.setIds(gem.getId());
+		gemResource.setGemId(gem.getId());
 		/*
 		 * ADD custom link to your representation object
 		 */

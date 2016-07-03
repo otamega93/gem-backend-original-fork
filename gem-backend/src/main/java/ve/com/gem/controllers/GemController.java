@@ -2,10 +2,7 @@ package ve.com.gem.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.PagedResources;
 import org.springframework.http.HttpStatus;
@@ -15,7 +12,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import ve.com.gem.entities.Gem;
@@ -24,7 +20,6 @@ import ve.com.gem.resources.assembler.GemResourceAssembler;
 import ve.com.gem.services.IGemService;
 
 @RestController
-@CrossOrigin(origins = "*")
 @RequestMapping(value = "/api/v1/gems")
 public class GemController {
 	
@@ -40,27 +35,18 @@ public class GemController {
 	public GemController() {
 	}
 	
-	/**
-	 * List all gems.
-	 * @return
-	 */
-	/**
-	@RequestMapping(value="",method=RequestMethod.GET,produces="application/hal+json")
+	@RequestMapping(value="",method=RequestMethod.OPTIONS,produces="application/json")
 	@ResponseBody
-	public PagedResources<GemResource> sortAll(Sort sort){
-		
-		Page<Gem> gems = gemService.findAll(sort);
-		//List<Gem> gems = gemService.findAll();
-		//return new ResponseEntity<PagedResources<GemResource>>(gems,HttpStatus.OK);
-		return pageAssembler.toResource(gems, gemResourceAssembler);
+	public ResponseEntity<Gem> options(){
+		return new ResponseEntity<Gem>(HttpStatus.ACCEPTED);
 	}
-	*/
 	
 	/**
 	 * List all gems.
 	 * @return
 	 */
 	@RequestMapping(value="",method=RequestMethod.GET,produces="application/hal+json")
+	@CrossOrigin(origins = "*")
 	@ResponseBody
 	public PagedResources<GemResource> loadAll(Pageable pageable){
 		
@@ -77,6 +63,7 @@ public class GemController {
 	 * @return
 	 */
 	@RequestMapping(value="/{id}",method=RequestMethod.GET)
+	@CrossOrigin(origins = "*")
 	public ResponseEntity<GemResource> load(@PathVariable Long id)
 	{
 		Gem gem = gemService.findById(id);
@@ -91,7 +78,7 @@ public class GemController {
 	}
 	
 	
-	
+    @CrossOrigin(origins = "*")
 	@RequestMapping(value="/",method=RequestMethod.POST, produces = "application/json; charset=UTF-8")
 	public ResponseEntity<GemResource> save(@RequestBody Gem gem)
 	{
@@ -107,6 +94,7 @@ public class GemController {
 	}
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT, produces = "application/json; charset=UTF-8")
+	@CrossOrigin(origins = "*")
 	public ResponseEntity<GemResource> update(@PathVariable Long id,@RequestBody Gem gem)
 	{
 		Gem gemCatch = gemService.findById(id);
@@ -123,5 +111,21 @@ public class GemController {
 		}
 		else
 			return new ResponseEntity<GemResource>(gemResourceAssembler.toResource(gemCatch),HttpStatus.NOT_FOUND);
+	}
+	
+	@RequestMapping(value="/{id}",method=RequestMethod.DELETE,produces = "application/json; charset=UTF-8")
+	@CrossOrigin(origins = "*")
+	public ResponseEntity<Gem> delete(@PathVariable Long id){
+		Gem gemCatch = gemService.findById(id);
+		System.out.println(gemCatch);
+		if(null != gemCatch)
+		{
+			gemService.delete(gemCatch);
+			return new ResponseEntity<Gem>(new Gem(),HttpStatus.OK);
+		}
+		else
+		{
+				return new ResponseEntity<Gem>(new Gem(),HttpStatus.MOVED_PERMANENTLY);
+		}
 	}
 }

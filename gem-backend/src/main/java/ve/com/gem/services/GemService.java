@@ -75,4 +75,14 @@ public class GemService implements IGemService {
 		 PageImpl<Gem> pages= new PageImpl<Gem>(Lists.newArrayList(gemRepository.findAll(sort)));
 		 return pages;
 	}
+
+	@Override
+	public boolean delete(Gem gem) {
+		Long id=0L;
+		if(null != gem)
+			id=gem.getId();
+		gemRepository.delete(id);
+		
+		return !gemRepository.exists(id);
+	}
 }
