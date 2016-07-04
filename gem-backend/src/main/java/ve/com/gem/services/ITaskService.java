@@ -1,9 +1,12 @@
 package ve.com.gem.services;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ve.com.gem.entities.Task;
+import ve.com.gem.resources.JobResource;
 
 public interface ITaskService {
 
@@ -14,5 +17,7 @@ public interface ITaskService {
 	public Page<Task> findByNameLike(Pageable pageable, String name);
 	
 	public Task findById (Long id);
+
+	List<JobResource> findJobsFromTask(Long id);
 	
 }

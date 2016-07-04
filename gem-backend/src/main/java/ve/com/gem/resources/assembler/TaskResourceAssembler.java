@@ -2,16 +2,20 @@ package ve.com.gem.resources.assembler;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.mvc.ResourceAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 import ve.com.gem.controllers.TaskController;
-import ve.com.gem.entities.Job;
 import ve.com.gem.entities.Task;
 import ve.com.gem.resources.TaskResource;
+import ve.com.gem.services.ITaskService;
 
 @Component
 public class TaskResourceAssembler extends ResourceAssemblerSupport<Task, TaskResource>{
+	
+	@Autowired
+	private ITaskService taskService;
 
 	public TaskResourceAssembler () {
 		super(TaskController.class, TaskResource.class);
@@ -33,7 +37,8 @@ public class TaskResourceAssembler extends ResourceAssemblerSupport<Task, TaskRe
 		taskResource.setEstimatedDateEnd(task.getEstimatedDateEnd());
 		taskResource.setDateEnd(task.getDateEnd());
 		taskResource.setIds(task.getId());
-		taskResource.setJob(task.getJob());
+		taskResource.setJob(taskService.findJobsFromTask(task.getId()));
+		//taskResource.setJob(task.getJob());
 		taskResource.add(linkTo(TaskController.class).slash("").slash(task.getId()).withSelfRel());
 		taskResource.add(linkTo(TaskController.class).slash("").slash(task.getId()).withRel("task"));
 		return taskResource;

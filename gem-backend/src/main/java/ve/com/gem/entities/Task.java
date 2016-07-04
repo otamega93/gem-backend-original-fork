@@ -12,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
@@ -38,8 +37,7 @@ public class Task {
 	@NotNull
 	private Boolean isActive;
 	
-	@ManyToOne()
-	@JsonBackReference
+	@ManyToOne
 	@JoinColumn(name = "document_state_id")
 	private DocumentState documentState;
 	
@@ -59,7 +57,10 @@ public class Task {
 	@JsonManagedReference
 	private List<Job> job = new ArrayList<Job>();
 	
-	//private Project project;
+	@ManyToOne
+	//@JsonBackReference
+	@JoinColumn(name = "project_id")
+	private Project project;
 	
 	public Task(Long id, String name, String description, Timestamp createdAt, Timestamp updatedAt, Timestamp deletedAt,
 			Boolean isActive, Risk risk, List<Job> job) {

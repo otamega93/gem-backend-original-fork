@@ -7,28 +7,15 @@ import java.util.List;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.core.Relation;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import ve.com.gem.entities.DocumentState;
 import ve.com.gem.entities.Risk;
+import ve.com.gem.entities.Task;
 
-
-@Relation(collectionRelation = "tasks")
-public class TaskResource extends ResourceSupport {
-
+@Relation(collectionRelation = "projects")
+public class ProjectResource extends ResourceSupport {
+	
 	private String name;
 	
 	private String description;
-	
-	private Timestamp createdAt;
-	
-	private Timestamp updatedAt;
-	
-	private Timestamp deletedAt;
-	
-	private Boolean isActive;
-	
-	private DocumentState documentState;
 	
 	private Timestamp estimatedStartDate;
 	
@@ -37,13 +24,18 @@ public class TaskResource extends ResourceSupport {
 	private Timestamp estimatedDateEnd;
 	
 	private Timestamp dateEnd;
+
+	private Timestamp createdAt;
 	
-	private Long ids;
+	private Timestamp updatedAt;
+	
+	private Timestamp deletedAt;
+
+	private Boolean isActive;
 	
 	private Risk risk;
 	
-	//@JsonBackReference
-	private List<JobResource> job = new ArrayList<JobResource>();
+	private List<Task> task = new ArrayList<Task>();
 
 	public String getName() {
 		return name;
@@ -59,47 +51,6 @@ public class TaskResource extends ResourceSupport {
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Timestamp getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Timestamp createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Timestamp getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Timestamp updatedAt) {
-		this.updatedAt = updatedAt;
-	}
-
-	public Timestamp getDeletedAt() {
-		return deletedAt;
-	}
-
-	public void setDeletedAt(Timestamp deletedAt) {
-		this.deletedAt = deletedAt;
-	}
-
-	public Boolean getIsActive() {
-		return isActive;
-	}
-
-	public void setIsActive(Boolean isActive) {
-		this.isActive = isActive;
-	}
-
-	@JsonIgnore
-	public String getDocumentState() {
-		return documentState.toString();
-	}
-
-	public void setDocumentState(DocumentState documentState) {
-		this.documentState = documentState;
 	}
 
 	public Timestamp getEstimatedStartDate() {
@@ -134,12 +85,36 @@ public class TaskResource extends ResourceSupport {
 		this.dateEnd = dateEnd;
 	}
 
-	public Long getIds() {
-		return ids;
+	public Timestamp getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setIds(Long ids) {
-		this.ids = ids;
+	public void setCreatedAt(Timestamp createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public Timestamp getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(Timestamp updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public Timestamp getDeletedAt() {
+		return deletedAt;
+	}
+
+	public void setDeletedAt(Timestamp deletedAt) {
+		this.deletedAt = deletedAt;
+	}
+
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	public Risk getRisk() {
@@ -150,12 +125,12 @@ public class TaskResource extends ResourceSupport {
 		this.risk = risk;
 	}
 
-	public List<JobResource> getJob() {
-		return job;
+	public List<Task> getTask() {
+		return task;
 	}
 
-	public void setJob(List<JobResource> job) {
-		this.job = job;
+	public void setTask(List<Task> task) {
+		this.task = task;
 	}
-	
+
 }

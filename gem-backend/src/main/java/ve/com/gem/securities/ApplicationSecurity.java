@@ -92,16 +92,16 @@ public class ApplicationSecurity extends WebSecurityConfigurerAdapter {
 
 		 http
 		 .csrf().disable()
-		 .authorizeRequests().anyRequest().permitAll()
-		 .and()
-		 .formLogin().loginPage("/login").permitAll().successHandler(authenticationSuccessHandler)
-		 .failureHandler(authenticationFailureHandler)
-		 .and()
-		 .rememberMe().rememberMeParameter("remember-me").tokenValiditySeconds(2000)
-		 .and()
-		 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
-		 .and()
-		 .sessionManagement().maximumSessions(1);
+		 .authorizeRequests().anyRequest().permitAll();
+//		 .and()
+//		 .formLogin().loginPage("/login").permitAll().successHandler(authenticationSuccessHandler)
+//		 .failureHandler(authenticationFailureHandler)
+//		 .and()
+//		 .rememberMe().rememberMeParameter("remember-me").tokenValiditySeconds(2000)
+//		 .and()
+//		 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
+//		 .and()
+//		 .sessionManagement().maximumSessions(1);
 	}
 
 }

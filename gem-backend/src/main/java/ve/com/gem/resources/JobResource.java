@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.core.Relation;
 
-import ve.com.gem.entities.Task;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Relation(collectionRelation = "jobs")
@@ -23,7 +23,8 @@ public class JobResource extends ResourceSupport {
 	
 	private Boolean isActive;
 
-	private Task task;
+	//@JsonManagedReference
+	private TaskResource task;
 	
 	private Long ids;
 
@@ -75,11 +76,12 @@ public class JobResource extends ResourceSupport {
 		this.isActive = isActive;
 	}
 
-	public Task getTask() {
+	@JsonIgnore
+	public TaskResource getTask() {
 		return task;
 	}
 
-	public void setTask(Task task) {
+	public void setTask(TaskResource task) {
 		this.task = task;
 	}
 

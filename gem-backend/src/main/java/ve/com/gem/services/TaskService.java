@@ -15,8 +15,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 
+import ve.com.gem.entities.Job;
 import ve.com.gem.entities.Task;
 import ve.com.gem.repositories.ITaskRepository;
+import ve.com.gem.resources.JobResource;
+import ve.com.gem.resources.assembler.JobResourceAssembler;
 
 @Transactional(readOnly = true)
 @Service
@@ -48,6 +51,20 @@ public class TaskService implements ITaskService {
 		PageImpl<Task> taskPages = new PageImpl<>(tasks, pageable, taskRepository.count());
 		return taskPages;
 	}
+	
+	@Override
+	public List<JobResource> findJobsFromTask(Long id) {
+		
+		Task task = taskRepository.findOne(id);
+		List<Job> jobs = task.getJob(); 
+		List<JobResource> jobResourceList = new ArrayList<JobResource>();
+		
+	for (Job job : jobs) {
+		jobResourceList.add(new JobResourceAssembler().toResource(job));
+	}
+		return jobResourceList;
+	}
+
 
 	@Override
 	public Page<Task> findByNameLike(Pageable pageable, String name) {
