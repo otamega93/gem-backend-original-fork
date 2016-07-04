@@ -77,12 +77,15 @@ public class GemService implements IGemService {
 	}
 
 	@Override
+	@Transactional(readOnly=false)
 	public boolean delete(Gem gem) {
 		Long id=0L;
-		if(null != gem)
+		if(null != gem){
+			System.out.println("No es nula.");
 			id=gem.getId();
+		}
 		gemRepository.delete(id);
-		
+		System.out.println(gemRepository.exists(id));
 		return !gemRepository.exists(id);
 	}
 }

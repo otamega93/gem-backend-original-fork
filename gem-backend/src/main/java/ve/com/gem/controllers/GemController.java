@@ -38,7 +38,9 @@ public class GemController {
 	@RequestMapping(value="",method=RequestMethod.OPTIONS,produces="application/json")
 	@ResponseBody
 	public ResponseEntity<Gem> options(){
-		return new ResponseEntity<Gem>(HttpStatus.ACCEPTED);
+		ResponseEntity<Gem> response = new ResponseEntity<Gem>(HttpStatus.ACCEPTED);
+		response.getHeaders().setAccessControlAllowOrigin("*");
+		return response;
 	}
 	
 	/**
@@ -78,8 +80,9 @@ public class GemController {
 	}
 	
 	
-    @CrossOrigin(origins = "*")
-	@RequestMapping(value="/",method=RequestMethod.POST, produces = "application/json; charset=UTF-8")
+    
+	@RequestMapping(value="",method=RequestMethod.POST, produces = "application/json; charset=UTF-8")
+	@CrossOrigin(origins = "*")
 	public ResponseEntity<GemResource> save(@RequestBody Gem gem)
 	{
 		if(gemService.save(gem)!=null)
@@ -121,11 +124,11 @@ public class GemController {
 		if(null != gemCatch)
 		{
 			gemService.delete(gemCatch);
-			return new ResponseEntity<Gem>(new Gem(),HttpStatus.OK);
+			return new ResponseEntity<Gem>(HttpStatus.OK);
 		}
 		else
 		{
-				return new ResponseEntity<Gem>(new Gem(),HttpStatus.MOVED_PERMANENTLY);
+				return new ResponseEntity<Gem>(HttpStatus.BAD_REQUEST);
 		}
 	}
 }
