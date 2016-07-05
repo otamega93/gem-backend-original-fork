@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/gem-backend.iml" filepath="$PROJECT_DIR$/gem-backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gem-backend-mobile.iml" filepath="$PROJECT_DIR$/gem-backend-mobile.iml" />
     </modules>
   </component>
 </project>
