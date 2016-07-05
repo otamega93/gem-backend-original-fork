@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 public class Job {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotNull
@@ -34,7 +35,7 @@ public class Job {
 	private Boolean isActive;
 	
 	@ManyToOne
-	@JsonBackReference
+	@JsonBackReference(value = "task-job")
 	@JoinColumn(name = "task_id", updatable = true, insertable = true, nullable = true)
 	private Task task;
 	

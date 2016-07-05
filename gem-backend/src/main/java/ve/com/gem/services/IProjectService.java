@@ -2,13 +2,17 @@ package ve.com.gem.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ve.com.gem.entities.Project;
+import ve.com.gem.resources.TaskResource;
 
 public interface IProjectService {
 
-	public List<Project> findAll(Pageable pageable);
+	public Page<Project> findAll(Pageable pageable);
 	
 	public Project save(Project project);
+
+	public List<TaskResource> findTaskFromProject(Long id);
 }

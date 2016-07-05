@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -11,31 +12,35 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Risk {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	
 	@ManyToOne
 	@JoinColumn(name = "riskType_id")
 	private RiskType riskType;
+	
 	@ManyToOne
 	@JoinColumn(name = "riskLevel_id")
 	private RiskLevel riskLevel;
-	@NotBlank
+	
 	@NotNull
 	private String name;
+	
 	private String description;
-	@NotBlank
+	
 	@NotNull
 	private Timestamp createdAt;
+	
 	private Timestamp updatedAt;
+	
 	private Timestamp deletedAt;
-	@NotBlank
+	
 	@NotNull
 	private Boolean isActive;
 
@@ -56,7 +61,6 @@ public class Risk {
 
 	public Risk() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {

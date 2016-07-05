@@ -12,12 +12,12 @@ import ve.com.gem.resources.TaskResource;
 import ve.com.gem.services.ITaskService;
 
 @Component
-public class TaskResourceAssembler extends ResourceAssemblerSupport<Task, TaskResource>{
+public class TaskResourceProjectAssembler extends ResourceAssemblerSupport<Task, TaskResource>{
 	
 	@Autowired
 	private ITaskService taskService;
 
-	public TaskResourceAssembler () {
+	public TaskResourceProjectAssembler () {
 		super(TaskController.class, TaskResource.class);
 	}
 	

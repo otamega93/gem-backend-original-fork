@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -18,7 +19,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class Project {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotNull
@@ -49,9 +50,13 @@ public class Project {
 	private Risk risk;
 	
 	@OneToMany(mappedBy = "project", orphanRemoval = true)
-	@JsonManagedReference
+	@JsonManagedReference(value = "project-task")
 	private List<Task> task = new ArrayList<Task>();
 
+	public Project(Long id) {
+		this.id = id;
+	}
+	
 	public Project(Long id, String name, String description, Timestamp estimatedStartDate, Timestamp startDate,
 			Timestamp estimatedDateEnd, Timestamp dateEnd, Timestamp createdAt, Timestamp updatedAt,
 			Timestamp deletedAt, Boolean isActive, Risk risk, List<Task> task) {

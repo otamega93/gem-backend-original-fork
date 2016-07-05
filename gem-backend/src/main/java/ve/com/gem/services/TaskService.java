@@ -1,7 +1,6 @@
 package ve.com.gem.services;
 
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 
 import ve.com.gem.entities.Job;
+import ve.com.gem.entities.Project;
 import ve.com.gem.entities.Task;
+import ve.com.gem.repositories.IProjectRepository;
 import ve.com.gem.repositories.ITaskRepository;
 import ve.com.gem.resources.JobResource;
 import ve.com.gem.resources.assembler.JobResourceAssembler;
@@ -28,14 +29,21 @@ public class TaskService implements ITaskService {
 	@Autowired
 	private ITaskRepository taskRepository;
 	
+	@Autowired
+	private IProjectRepository projectRepository;
+	
 	private List<Task> tasks = new ArrayList<Task>();
 	
 	@Transactional(readOnly = false)
 	@Override
 	public Task save(Task task) {
-		System.out.println(LocalDateTime.now());
 		if (null != task) {
 			task.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+			Project project = projectRepository.findOne(task.getProject().getId());
+			task.setProject(project);
+			project.getTask().add(task);
+			projectRepository.save(project);
+			
 			return taskRepository.save(task);
 		}
 		
@@ -48,7 +56,7 @@ public class TaskService implements ITaskService {
 	public Page<Task> findAll(Pageable pageable) {
 		
 		tasks = Lists.newArrayList(taskRepository.findAll(pageable));
-		PageImpl<Task> taskPages = new PageImpl<>(tasks, pageable, taskRepository.count());
+		PageImpl<Task> taskPages = new PageImpl<Task>(tasks, pageable, taskRepository.count());
 		return taskPages;
 	}
 	
@@ -59,9 +67,9 @@ public class TaskService implements ITaskService {
 		List<Job> jobs = task.getJob(); 
 		List<JobResource> jobResourceList = new ArrayList<JobResource>();
 		
-	for (Job job : jobs) {
-		jobResourceList.add(new JobResourceAssembler().toResource(job));
-	}
+		for (Job job : jobs) {
+			jobResourceList.add(new JobResourceAssembler().toResource(job));
+		}
 		return jobResourceList;
 	}
 

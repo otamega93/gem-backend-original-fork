@@ -4,29 +4,30 @@ import java.sql.Timestamp;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
 public class RiskLevel {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@NotBlank
+
 	@NotNull
 	private String name;
+	
 	private String description;
-	@NotBlank
+	
 	@NotNull
 	private Timestamp createdAt;
+	
 	private Timestamp updatedAt;
+	
 	private Timestamp deletedAt;
-	@NotBlank
+	
 	@NotNull
 	private Boolean isActive;
 
@@ -45,7 +46,6 @@ public class RiskLevel {
 
 	public RiskLevel() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public Long getId() {

@@ -8,7 +8,6 @@ import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.core.Relation;
 
 import ve.com.gem.entities.Risk;
-import ve.com.gem.entities.Task;
 
 @Relation(collectionRelation = "projects")
 public class ProjectResource extends ResourceSupport {
@@ -35,7 +34,9 @@ public class ProjectResource extends ResourceSupport {
 	
 	private Risk risk;
 	
-	private List<Task> task = new ArrayList<Task>();
+	private Long ids;
+	
+	private List<TaskResource> task = new ArrayList<TaskResource>();
 
 	public String getName() {
 		return name;
@@ -125,12 +126,20 @@ public class ProjectResource extends ResourceSupport {
 		this.risk = risk;
 	}
 
-	public List<Task> getTask() {
+	public List<TaskResource> getTask() {
 		return task;
 	}
 
-	public void setTask(List<Task> task) {
+	public void setTask(List<TaskResource> task) {
 		this.task = task;
+	}
+
+	public Long getIds() {
+		return ids;
+	}
+
+	public void setIds(Long ids) {
+		this.ids = ids;
 	}
 
 }

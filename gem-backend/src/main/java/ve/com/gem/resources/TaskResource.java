@@ -42,9 +42,10 @@ public class TaskResource extends ResourceSupport {
 	
 	private Risk risk;
 	
-	//@JsonBackReference
 	private List<JobResource> job = new ArrayList<JobResource>();
 
+	private ProjectResource project;
+	
 	public String getName() {
 		return name;
 	}
@@ -156,6 +157,15 @@ public class TaskResource extends ResourceSupport {
 
 	public void setJob(List<JobResource> job) {
 		this.job = job;
+	}
+
+	@JsonIgnore
+	public ProjectResource getProject() {
+		return project;
+	}
+
+	public void setProject(ProjectResource project) {
+		this.project = project;
 	}
 	
 }
