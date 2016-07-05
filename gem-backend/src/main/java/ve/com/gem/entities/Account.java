@@ -1,5 +1,7 @@
 package ve.com.gem.entities;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -24,19 +26,26 @@ public class Account {
 	
 	@NotNull
 	@NotBlank
-	//@JsonProperty(access = Access.WRITE_ONLY)
 	private String password;
 	
 	@NotNull
 	@NotBlank
 	private String authorities;
+	
+	
+	private String email;
+	
+	
+	private Date lastPasswordReset; 
 
-	public Account(Long id, String username, String password, String authorities) {
+	public Account(Long id, String username, String password, String authorities, String email, Date lastPasswordReset) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.password = password;
 		this.authorities = authorities;
+		this.email = email;
+		this.lastPasswordReset = lastPasswordReset;
 	}
 
 	public Account() {
@@ -59,7 +68,6 @@ public class Account {
 		this.username = username;
 	}
 
-	//@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -74,6 +82,22 @@ public class Account {
 
 	public void setAuthorities(String authorities) {
 		this.authorities = authorities;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Date getLastPasswordReset() {
+		return lastPasswordReset;
+	}
+
+	public void setLastPasswordReset(Date lastPasswordReset) {
+		this.lastPasswordReset = lastPasswordReset;
 	}
 
 	@Override
@@ -104,7 +128,7 @@ public class Account {
 	@Override
 	public String toString() {
 		return "Account [id=" + id + ", username=" + username + ", password=" + password + ", authorities="
-				+ authorities + "]";
+				+ authorities + ", email=" + email + ", lastPasswordReset=" + lastPasswordReset + "]";
 	}
 
 }

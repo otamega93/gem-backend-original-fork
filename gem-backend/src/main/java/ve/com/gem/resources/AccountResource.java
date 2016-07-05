@@ -1,5 +1,7 @@
 package ve.com.gem.resources;
 
+import java.sql.Date;
+
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.core.Relation;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -13,6 +15,10 @@ public class AccountResource extends ResourceSupport {
     private String password;
 
     private String authorities;
+    
+    private String email;
+    
+    private Date lastPasswordReset;
     
     private Long ids;
 
@@ -48,6 +54,22 @@ public class AccountResource extends ResourceSupport {
 
 	public void setIds(Long ids) {
 		this.ids = ids;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public Date getLastPasswordReset() {
+		return lastPasswordReset;
+	}
+
+	public void setLastPasswordReset(Date lastPasswordReset) {
+		this.lastPasswordReset = lastPasswordReset;
 	}
 	
 }
