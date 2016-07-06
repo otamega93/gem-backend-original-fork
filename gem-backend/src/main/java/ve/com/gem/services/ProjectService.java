@@ -22,6 +22,7 @@ import ve.com.gem.entities.Project;
 import ve.com.gem.entities.Task;
 import ve.com.gem.repositories.IProjectRepository;
 import ve.com.gem.resources.TaskResource;
+import ve.com.gem.resources.assembler.TaskResourceAssembler;
 
 
 @Transactional(readOnly = true)
@@ -72,7 +73,6 @@ public class ProjectService implements IProjectService {
 			taskResource.add(linkTo(TaskController.class).slash("").slash(task.getId()).withRel("task"));
 			
 			taskResourceList.add(taskResource);
-			//taskResourceList.add(new TaskResourceProjectAssembler().toResource(task));	
 		}
 		
 		return taskResourceList;
