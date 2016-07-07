@@ -62,7 +62,7 @@ public class ProjectService implements IProjectService {
 			taskResource.setDeletedAt(task.getDeletedAt());
 			taskResource.setIsActive(task.getIsActive());
 			taskResource.setRisk(task.getRisk());
-			//taskResource.setDocumentState(task.getDocumentState());
+			taskResource.setDocumentState(taskService.findDocumentStateFromTaskId(task.getDocumentState().getId()));
 			taskResource.setEstimatedStartDate(task.getEstimatedStartDate());
 			taskResource.setStartDate(task.getStartDate());
 			taskResource.setEstimatedDateEnd(task.getEstimatedDateEnd());

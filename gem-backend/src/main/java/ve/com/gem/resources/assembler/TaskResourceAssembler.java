@@ -9,11 +9,12 @@ import org.springframework.stereotype.Component;
 import ve.com.gem.controllers.TaskController;
 import ve.com.gem.entities.Task;
 import ve.com.gem.resources.TaskResource;
+import ve.com.gem.services.IDocumentStateService;
 import ve.com.gem.services.ITaskService;
 
 @Component
 public class TaskResourceAssembler extends ResourceAssemblerSupport<Task, TaskResource>{
-	
+
 	@Autowired
 	private ITaskService taskService;
 
@@ -31,7 +32,7 @@ public class TaskResourceAssembler extends ResourceAssemblerSupport<Task, TaskRe
 		taskResource.setDeletedAt(task.getDeletedAt());
 		taskResource.setIsActive(task.getIsActive());
 		taskResource.setRisk(task.getRisk());
-		//taskResource.setDocumentState(task.getDocumentState());
+		//taskResource.setDocumentState(taskService.findDocumentStateFromTaskId(task.getDocumentState().getId()));
 		taskResource.setEstimatedStartDate(task.getEstimatedStartDate());
 		taskResource.setStartDate(task.getStartDate());
 		taskResource.setEstimatedDateEnd(task.getEstimatedDateEnd());

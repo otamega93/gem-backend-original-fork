@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ve.com.gem.entities.Task;
+import ve.com.gem.resources.DocumentStateResource;
 import ve.com.gem.resources.JobResource;
 
 public interface ITaskService {
@@ -18,6 +19,8 @@ public interface ITaskService {
 	
 	public Task findById (Long id);
 
-	List<JobResource> findJobsFromTask(Long id);
+	public List<JobResource> findJobsFromTask(Long id);
+	
+	public DocumentStateResource findDocumentStateFromTaskId(Long id);
 	
 }
