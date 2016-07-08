@@ -1,4 +1,6 @@
-package ve.com.gem.services;
+package ve.com.gem.services.implementations;
+
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -14,18 +16,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 
+import ve.com.gem.controllers.DocumentStateController;
+import ve.com.gem.entities.DocumentState;
 import ve.com.gem.entities.Job;
 import ve.com.gem.entities.Project;
 import ve.com.gem.entities.Task;
+import ve.com.gem.repositories.IDocumentStateRepository;
 import ve.com.gem.repositories.IProjectRepository;
 import ve.com.gem.repositories.ITaskRepository;
+import ve.com.gem.resources.DocumentStateResource;
 import ve.com.gem.resources.JobResource;
+import ve.com.gem.resources.assembler.DocumentStateResourceAssembler;
 import ve.com.gem.resources.assembler.JobResourceAssembler;
+import ve.com.gem.services.ITaskService;
 
 @Transactional(readOnly = true)
 @Service
 public class TaskService implements ITaskService {
 
+	@Autowired
+	private IDocumentStateRepository documentStateRepository;
+	
 	@Autowired
 	private ITaskRepository taskRepository;
 	
@@ -43,6 +54,10 @@ public class TaskService implements ITaskService {
 			task.setProject(project);
 			project.getTask().add(task);
 			projectRepository.save(project);
+
+			//TEST
+			DocumentState documentState = documentStateRepository.findOne(1L);
+			task.setDocumentState(documentState);
 			
 			return taskRepository.save(task);
 		}
@@ -80,6 +95,23 @@ public class TaskService implements ITaskService {
 		tasks = Lists.newArrayList(taskRepository.findByNameLike(pageable, "%" + name + "%"));
 		PageImpl<Task> taskPages = new PageImpl<>(tasks, pageable, taskRepository.count());
 		return taskPages;
+	}
+	
+
+	@Override
+	public DocumentStateResource findDocumentStateFromTaskId(Long id) {
+		
+		DocumentState documentState = documentStateRepository.findOne(id);
+		DocumentStateResource documentStateResource = new DocumentStateResource();
+		documentStateResource.setName(documentState.getName());
+		documentStateResource.setDescription(documentState.getDescription());
+		documentStateResource.setCreatedAt(documentState.getCreatedAt());
+		documentStateResource.setUpdatedAt(documentState.getUpdatedAt());
+		documentStateResource.setDeletedAt(documentState.getDeletedAt());
+		documentStateResource.setIds(documentState.getId());
+		documentStateResource.add(linkTo(DocumentStateController.class).slash("").slash(documentState.getId()).withSelfRel());
+	    documentStateResource.add(linkTo(DocumentStateController.class).slash("").slash(documentState.getId()).withRel("documentState"));
+		return documentStateResource;
 	}
 
 	@Override

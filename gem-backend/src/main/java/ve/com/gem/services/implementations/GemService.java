@@ -1,4 +1,4 @@
-package ve.com.gem.services;
+package ve.com.gem.services.implementations;
 
 
 import java.sql.Timestamp;
@@ -18,6 +18,7 @@ import com.google.common.collect.Lists;
 
 import ve.com.gem.entities.Gem;
 import ve.com.gem.repositories.IGemRepository;
+import ve.com.gem.services.IGemService;
 
 @Transactional(readOnly=true)
 @Service

@@ -52,6 +52,10 @@ public class Project {
 	@OneToMany(mappedBy = "project", orphanRemoval = true)
 	@JsonManagedReference(value = "project-task")
 	private List<Task> task = new ArrayList<Task>();
+	
+	@ManyToOne
+	@JoinColumn(name = "document_state_id")
+	private DocumentState documentState;
 
 	public Project(Long id) {
 		this.id = id;
@@ -59,7 +63,7 @@ public class Project {
 	
 	public Project(Long id, String name, String description, Timestamp estimatedStartDate, Timestamp startDate,
 			Timestamp estimatedDateEnd, Timestamp dateEnd, Timestamp createdAt, Timestamp updatedAt,
-			Timestamp deletedAt, Boolean isActive, Risk risk, List<Task> task) {
+			Timestamp deletedAt, Boolean isActive, Risk risk, List<Task> task, DocumentState documentState) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -74,6 +78,7 @@ public class Project {
 		this.isActive = isActive;
 		this.risk = risk;
 		this.task = task;
+		this.documentState = documentState;
 	}
 
 	public Project() {
@@ -184,6 +189,14 @@ public class Project {
 		this.task = task;
 	}
 
+	public DocumentState getDocumentState() {
+		return documentState;
+	}
+
+	public void setDocumentState(DocumentState documentState) {
+		this.documentState = documentState;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -214,7 +227,8 @@ public class Project {
 		return "Project [id=" + id + ", name=" + name + ", description=" + description + ", estimatedStartDate="
 				+ estimatedStartDate + ", startDate=" + startDate + ", estimatedDateEnd=" + estimatedDateEnd
 				+ ", dateEnd=" + dateEnd + ", createdAt=" + createdAt + ", updatedAt=" + updatedAt + ", deletedAt="
-				+ deletedAt + ", isActive=" + isActive + "]";
+				+ deletedAt + ", isActive=" + isActive + ", risk=" + risk + ", task=" + task + ", documentState="
+				+ documentState + "]";
 	}
 	
 }

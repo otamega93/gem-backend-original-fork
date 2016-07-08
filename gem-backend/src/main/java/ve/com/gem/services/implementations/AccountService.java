@@ -1,4 +1,4 @@
-package ve.com.gem.services;
+package ve.com.gem.services.implementations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,7 @@ import com.google.common.collect.Lists;
 
 import ve.com.gem.entities.Account;
 import ve.com.gem.repositories.IAccountRepository;
+import ve.com.gem.services.IAccountService;
 
 @Transactional(readOnly = true)
 @Service

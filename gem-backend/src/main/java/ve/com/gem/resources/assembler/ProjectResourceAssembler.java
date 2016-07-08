@@ -26,6 +26,7 @@ public class ProjectResourceAssembler extends ResourceAssemblerSupport<Project, 
 		ProjectResource projectResource = new ProjectResource();
 		projectResource.setName(project.getName());
 		projectResource.setDescription(project.getDescription());
+		projectResource.setDocumentState(projectService.findDocumentStateFromProjectId(project.getDocumentState().getId()));
 		projectResource.setCreatedAt(project.getCreatedAt());
 		projectResource.setUpdatedAt(project.getUpdatedAt());
 		projectResource.setDeletedAt(project.getDeletedAt());
@@ -36,7 +37,6 @@ public class ProjectResourceAssembler extends ResourceAssemblerSupport<Project, 
 		projectResource.setRisk(project.getRisk());
 		projectResource.setIds(project.getId());
 		projectResource.setTask(projectService.findTaskFromProject(project.getId()));
-		//projectResource.setTask(project.getTask());
 		projectResource.add(linkTo(ProjectController.class).slash("").slash(project.getId()).withSelfRel());
 		projectResource.add(linkTo(ProjectController.class).slash("").slash(project.getId()).withRel("project"));
 		return projectResource;

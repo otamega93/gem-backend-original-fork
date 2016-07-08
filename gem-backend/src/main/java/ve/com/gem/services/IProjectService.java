@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import ve.com.gem.entities.Project;
+import ve.com.gem.resources.DocumentStateResource;
 import ve.com.gem.resources.TaskResource;
 
 public interface IProjectService {
@@ -15,4 +16,6 @@ public interface IProjectService {
 	public Project save(Project project);
 
 	public List<TaskResource> findTaskFromProject(Long id);
+	
+	public DocumentStateResource findDocumentStateFromProjectId(Long id);
 }

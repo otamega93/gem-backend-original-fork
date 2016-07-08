@@ -28,7 +28,7 @@ public class TaskResource extends ResourceSupport {
 	
 	private Boolean isActive;
 	
-	private DocumentState documentState;
+	private DocumentStateResource documentState;
 	
 	private Timestamp estimatedStartDate;
 	
@@ -94,12 +94,11 @@ public class TaskResource extends ResourceSupport {
 		this.isActive = isActive;
 	}
 
-	@JsonIgnore
-	public String getDocumentState() {
-		return documentState.toString();
+	public DocumentStateResource getDocumentState() {
+		return documentState;
 	}
 
-	public void setDocumentState(DocumentState documentState) {
+	public void setDocumentState(DocumentStateResource documentState) {
 		this.documentState = documentState;
 	}
 
