@@ -1,4 +1,4 @@
-package ve.com.gem.services;
+package ve.com.gem.services.implementations;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -18,6 +18,7 @@ import ve.com.gem.entities.Job;
 import ve.com.gem.entities.Task;
 import ve.com.gem.repositories.IJobRepository;
 import ve.com.gem.repositories.ITaskRepository;
+import ve.com.gem.services.IJobService;
 
 @Transactional(readOnly = true)
 @Service

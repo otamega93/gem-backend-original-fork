@@ -1,4 +1,4 @@
-package ve.com.gem.services;
+package ve.com.gem.services.implementations;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ import com.google.common.collect.Lists;
 
 import ve.com.gem.entities.DocumentState;
 import ve.com.gem.repositories.IDocumentStateRepository;
+import ve.com.gem.services.IDocumentStateService;
 
 @Transactional(readOnly = true)
 @Service

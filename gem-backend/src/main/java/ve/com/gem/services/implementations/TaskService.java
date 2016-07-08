@@ -1,4 +1,4 @@
-package ve.com.gem.services;
+package ve.com.gem.services.implementations;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -28,6 +28,7 @@ import ve.com.gem.resources.DocumentStateResource;
 import ve.com.gem.resources.JobResource;
 import ve.com.gem.resources.assembler.DocumentStateResourceAssembler;
 import ve.com.gem.resources.assembler.JobResourceAssembler;
+import ve.com.gem.services.ITaskService;
 
 @Transactional(readOnly = true)
 @Service

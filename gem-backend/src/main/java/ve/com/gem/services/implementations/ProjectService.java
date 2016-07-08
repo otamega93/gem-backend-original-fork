@@ -1,4 +1,4 @@
-package ve.com.gem.services;
+package ve.com.gem.services.implementations;
 
 import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
 
@@ -17,12 +17,18 @@ import org.springframework.transaction.annotation.Transactional;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.collect.Lists;
 
+import ve.com.gem.controllers.DocumentStateController;
 import ve.com.gem.controllers.TaskController;
+import ve.com.gem.entities.DocumentState;
 import ve.com.gem.entities.Project;
 import ve.com.gem.entities.Task;
+import ve.com.gem.repositories.IDocumentStateRepository;
 import ve.com.gem.repositories.IProjectRepository;
+import ve.com.gem.resources.DocumentStateResource;
 import ve.com.gem.resources.TaskResource;
 import ve.com.gem.resources.assembler.TaskResourceAssembler;
+import ve.com.gem.services.IProjectService;
+import ve.com.gem.services.ITaskService;
 
 
 @Transactional(readOnly = true)
@@ -35,6 +41,9 @@ public class ProjectService implements IProjectService {
 	@Autowired
 	private ITaskService taskService;
 	
+	@Autowired
+	private IDocumentStateRepository documentStateRepository;
+	
 	private List<Project> projects = new ArrayList<Project>();
 	
 	
@@ -43,6 +52,21 @@ public class ProjectService implements IProjectService {
 		projects = Lists.newArrayList(projectRepository.findAll(pageable));
 		PageImpl<Project> projectPages= new PageImpl<Project>(projects, pageable, projectRepository.count());
 		return projectPages;
+	}
+	
+	public DocumentStateResource findDocumentStateFromProjectId(Long id) {
+		
+		DocumentState documentState = documentStateRepository.findOne(id);
+		DocumentStateResource documentStateResource = new DocumentStateResource();
+		documentStateResource.setName(documentState.getName());
+		documentStateResource.setDescription(documentState.getDescription());
+		documentStateResource.setCreatedAt(documentState.getCreatedAt());
+		documentStateResource.setUpdatedAt(documentState.getUpdatedAt());
+		documentStateResource.setDeletedAt(documentState.getDeletedAt());
+		documentStateResource.setIds(documentState.getId());
+		documentStateResource.add(linkTo(DocumentStateController.class).slash("").slash(documentState.getId()).withSelfRel());
+	    documentStateResource.add(linkTo(DocumentStateController.class).slash("").slash(documentState.getId()).withRel("documentState"));
+		return documentStateResource;
 	}
 	
 	@Override
@@ -83,6 +107,11 @@ public class ProjectService implements IProjectService {
 	public Project save(Project project) {
 		if (null != project) {
 			project.setCreatedAt(Timestamp.valueOf(LocalDateTime.now()));
+			
+			//TEST
+			DocumentState documentState = documentStateRepository.findOne(1L);
+			project.setDocumentState(documentState);
+			
 			projectRepository.save(project);
 			return project;
 		}

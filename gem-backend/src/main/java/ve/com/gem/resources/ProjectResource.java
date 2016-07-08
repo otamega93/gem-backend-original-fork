@@ -32,6 +32,8 @@ public class ProjectResource extends ResourceSupport {
 
 	private Boolean isActive;
 	
+	private DocumentStateResource documentState;
+	
 	private Risk risk;
 	
 	private Long ids;
@@ -140,6 +142,14 @@ public class ProjectResource extends ResourceSupport {
 
 	public void setIds(Long ids) {
 		this.ids = ids;
+	}
+
+	public DocumentStateResource getDocumentState() {
+		return documentState;
+	}
+
+	public void setDocumentState(DocumentStateResource documentState) {
+		this.documentState = documentState;
 	}
 
 }
